@@ -8,7 +8,8 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='M9 14L11 40Q11 42 13 42H27Q29 42 29 40L31 14Z' fill='%23ff5b1f'/%3E%3Crect x='5' y='9' width='30' height='6' rx='3' fill='%230e3a22'/%3E%3Ccircle cx='16.5' cy='25' r='2' fill='%23101512'/%3E%3Ccircle cx='23.5' cy='25' r='2' fill='%23101512'/%3E%3Cpath d='M15.500 30Q20 34.500 24.500 30' stroke='%23101512' stroke-width='2.200' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
   :root {
     --green: #0e3a22;
@@ -76,7 +77,7 @@
   .caps { position: absolute; top: 108px; left: 40px; right: 40px; display: flex; justify-content: space-between; gap: 16px; font: 400 12.5px/1.4 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.9; }
   .hero .wrap { width: 100%; }
   .hero-body { padding-bottom: 64px; padding-top: 180px; }
-  .h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(96px, 23vw, 330px); line-height: 0.86; letter-spacing: 0.005em; margin: 0; }
+  .h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(90px, 19vw, 275px); line-height: 0.86; letter-spacing: 0.005em; margin: 0; }
   .h1 .dot { color: var(--orange); }
   .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; flex-wrap: wrap; margin-top: 30px; }
   .hero-row p { margin: 0; max-width: 520px; font-size: 18px; color: rgba(245, 240, 230, 0.88); }
@@ -104,14 +105,44 @@
   .loaded .junk > *:nth-child(6) { transition-delay: 2.05s; }
   html.static .truck, html.static .junk > * { transform: none; opacity: 1; transition: none; }
   html.static .rig, html.static .wheel .spokes, html.static .badge-spin { animation: none; }
-  .badge { position: absolute; left: -6%; top: -12%; width: 26%; max-width: 132px; pointer-events: auto; text-decoration: none; display: block; }
-  .badge svg { width: 100%; height: auto; }
-  .badge-spin { transform-origin: 50% 50%; animation: spin 22s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) {
     .truck, .junk > * { transform: none; opacity: 1; transition: none; }
     .rig, .wheel .spokes, .badge-spin { animation: none !important; }
   }
+
+  /* ---------- brand mark ---------- */
+  .brand { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+  @media (max-width: 860px) { .brand { font-size: 21px; gap: 8px; } .mark { width: 26px; height: 29px; } }
+  .mark { width: 30px; height: 33px; flex: none; overflow: visible; }
+  .mark .lid { fill: currentColor; transform-box: fill-box; transform-origin: 0% 100%; transition: transform 0.35s var(--ease-ui); }
+  .brand:hover .lid { transform: rotate(-24deg) translateY(-2px); }
+
+  /* ---------- toss the junk ---------- */
+  .toss-layer .toss { cursor: pointer; pointer-events: all; opacity: 0; transition: opacity 0.6s ease 1.9s; transform-box: fill-box; transform-origin: center; outline: none; }
+  .loaded .toss-layer .toss { opacity: 1; }
+  html.static .toss-layer .toss { opacity: 1; transition: none; }
+  .toss .bob { transform-box: fill-box; transform-origin: center; animation: float 3.2s ease-in-out infinite alternate; transition: filter 0.15s var(--ease-out); }
+  @keyframes float { to { transform: translateY(-9px) rotate(3deg); } }
+  .toss:hover .bob, .toss:focus-visible .bob { filter: drop-shadow(0 0 10px rgba(255, 91, 31, 0.9)); }
+  .squash { transform-box: fill-box; transform-origin: 50% 100%; }
+  .squash.hit { animation: squash 0.45s var(--ease-std); }
+  @keyframes squash { 0% { transform: none; } 30% { transform: scale(1.025, 0.95); } 65% { transform: scale(0.992, 1.018); } 100% { transform: none; } }
+  .toss-ui { pointer-events: auto; display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 10px; font: 500 12.5px/1.3 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245, 240, 230, 0.85); }
+  .toss-ui button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink); background: var(--orange); border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; transition: background-color 0.15s var(--ease-out); }
+  .toss-ui button:hover { background: var(--orange-dark); }
+  .toss-ui [hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .toss .bob, .squash.hit { animation: none !important; } .toss-layer .toss { opacity: 1; transition: none; } }
+  html.static .toss .bob { animation: none; }
+
+  /* ---------- hazard tape, stamp, mega wordmark ---------- */
+  .hazard { height: 16px; background: repeating-linear-gradient(-45deg, #ffd23f 0 16px, #101512 16px 32px); }
+  .step { position: relative; }
+  .stamp { position: absolute; top: 34px; right: 10px; font-family: "Saira Stencil One", var(--display); font-size: 28px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; color: var(--orange); border: 3px solid var(--orange); border-radius: 8px; padding: 6px 12px 4px; opacity: 0; transform: rotate(-9deg) scale(1.9); transition: opacity 0.2s ease 0.6s, transform 0.45s var(--ease-std) 0.6s; pointer-events: none; }
+  .step.in .stamp { opacity: 0.95; transform: rotate(-9deg) scale(1); }
+  html.static .stamp { opacity: 0.95; transform: rotate(-9deg); transition: none; }
+  @media (prefers-reduced-motion: reduce) { .stamp { opacity: 0.95; transform: rotate(-9deg); transition: none; } }
+  .mega { font-family: var(--display); text-transform: uppercase; white-space: nowrap; font-size: min(15vw, 230px); line-height: 0.82; letter-spacing: 0.005em; color: rgba(245, 240, 230, 0.09); margin: 36px 0 0 -0.02em; user-select: none; overflow: hidden; transition: color 0.4s ease; }
+  footer:hover .mega { color: rgba(255, 91, 31, 0.5); }
 
   /* ---------- service cards ---------- */
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
@@ -182,10 +213,10 @@
     .caps { left: 30px; right: 30px; top: 100px; flex-direction: column; gap: 4px; }
     .hero-body { padding-top: 200px; padding-bottom: 44px; }
     .frame { inset: 72px 10px 10px; }
-    .h1 { font-size: 38vw; }
+    .h1 { font-size: 36vw; }
     .art { right: 5%; left: auto; top: 178px; bottom: auto; width: 86%; }
-    .badge { left: auto; right: -2%; top: -30%; width: 25%; }
-    .hero-body { padding-top: 410px; }
+    .hero-body { padding-top: 520px; }
+    .toss-ui { justify-content: flex-start; margin-top: 4px; }
     .cards { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 560px) {
@@ -210,7 +241,15 @@
 
 <nav class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top">Trash It All</a>
+    <a class="brand" href="#top" aria-label="Trash It All, home">
+      <svg class="mark" viewBox="0 0 40 44" aria-hidden="true">
+        <path d="M9 14L11 40Q11 42 13 42H27Q29 42 29 40L31 14Z" fill="#ff5b1f"/>
+        <circle cx="16.500" cy="25" r="2" fill="#101512"/><circle cx="23.500" cy="25" r="2" fill="#101512"/>
+        <path d="M15.500 30Q20 34.500 24.500 30" stroke="#101512" stroke-width="2.200" fill="none" stroke-linecap="round"/>
+        <g class="lid"><rect x="5" y="9" width="30" height="6" rx="3"/><rect x="15" y="4.500" width="10" height="5" rx="2.500"/></g>
+      </svg>
+      <span>Trash It All</span>
+    </a>
     <div class="links">
       <a href="#how">How it works</a>
       <a href="#services">What we haul</a>
@@ -228,9 +267,9 @@
     <span>Fort Collins, CO</span>
   </div>
   <div class="art" aria-hidden="true">
-    <svg viewBox="0 0 700 460" role="img" focusable="false">
+    <svg viewBox="0 -130 700 590" role="group" aria-label="Illustration of a junk removal truck with junk you can toss in" focusable="false">
       <ellipse cx="350" cy="390" rx="330" ry="11" fill="#000" opacity=".28"/>
-      <g class="truck"><g class="rig">
+      <g class="truck"><g class="rig"><g class="squash">
         <path d="M6 250h34M0 282h48M14 314h28" stroke="#f5f0e6" stroke-width="4" stroke-linecap="round" opacity=".35"/>
         <g class="junk">
           <!-- couch -->
@@ -295,21 +334,31 @@
           <g class="spokes"><rect x="543" y="326" width="4" height="28" fill="#101512"/><rect x="531" y="338" width="28" height="4" fill="#101512"/></g>
           <circle cx="545" cy="340" r="5" fill="#101512"/>
         </g>
-      </g></g>
+      </g></g></g>
+      <g class="toss-layer">
+        <g transform="translate(95 -62)"><g class="toss" data-x="95" data-y="-62" role="button" tabindex="0" aria-label="Toss the armchair into the truck"><circle r="46" fill="transparent"/><g class="bob" style="animation-duration:3.4s;animation-delay:-1.2s">
+          <rect x="-24" y="-36" width="48" height="40" rx="12" fill="#c9b58a"/><rect x="-32" y="-8" width="64" height="28" rx="10" fill="#e0d0ae"/>
+          <rect x="-38" y="-16" width="16" height="38" rx="8" fill="#b9a577"/><rect x="22" y="-16" width="16" height="38" rx="8" fill="#b9a577"/>
+          <rect x="-28" y="20" width="6" height="12" rx="2" fill="#7a6a48"/><rect x="22" y="20" width="6" height="12" rx="2" fill="#7a6a48"/>
+        </g></g></g>
+        <g transform="translate(250 -72)"><g class="toss" data-x="250" data-y="-72" role="button" tabindex="0" aria-label="Toss the tire into the truck"><circle r="46" fill="transparent"/><g class="bob" style="animation-duration:2.9s;animation-delay:-0.4s">
+          <circle r="32" fill="#1a231d" stroke="#5b6b62" stroke-width="5"/><circle r="15" fill="#f5f0e6"/><circle r="5" fill="#101512"/>
+        </g></g></g>
+        <g transform="translate(410 -58)"><g class="toss" data-x="410" data-y="-58" role="button" tabindex="0" aria-label="Toss the box into the truck"><circle r="46" fill="transparent"/><g class="bob" style="animation-duration:3.7s;animation-delay:-2s">
+          <path d="M-30 -26L-18 -36H18L30 -26Z" fill="#b27a3e"/><rect x="-30" y="-26" width="60" height="52" fill="#c48a4b"/><rect x="-30" y="-5" width="60" height="9" fill="#dcae74"/>
+        </g></g></g>
+        <g transform="translate(560 -68)"><g class="toss" data-x="560" data-y="-68" role="button" tabindex="0" aria-label="Toss the trash bag into the truck"><circle r="46" fill="transparent"/><g class="bob" style="animation-duration:3.1s;animation-delay:-0.9s">
+          <ellipse cx="0" cy="4" rx="28" ry="30" fill="#4a5a51"/><path d="M-9 -24Q0 -40 9 -24Q0 -19 -9 -24Z" fill="#4a5a51"/>
+          <path d="M-17 -2Q-14 -14 -3 -17" stroke="#8da093" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g></g></g>
+      </g>
     </svg>
-    <a class="badge" href="tel:+19706980024" aria-label="Call for a quote">
-      <svg viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="58" fill="#ff5b1f"/>
-        <defs><path id="circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
-        <g class="badge-spin"><text font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#101512"><textPath href="#circ" textLength="268" lengthAdjust="spacing">CALL FOR A QUOTE · FORT COLLINS · </textPath></text></g>
-        <path d="M46 74L74 46M52 46H74V68" stroke="#101512" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <div class="toss-ui" aria-live="polite"><span id="tossMsg">Tap the junk to toss it in</span><button type="button" id="tossReset" hidden>&#8634; Again</button></div>
   </div>
   <div class="wrap hero-body">
-    <h1 class="h1" aria-label="Junk gone.">
-      <span class="line"><span style="--d:.05s">Junk</span></span>
-      <span class="line"><span style="--d:.18s">Gone<span class="dot">.</span></span></span>
+    <h1 class="h1" aria-label="Trash it all.">
+      <span class="line"><span style="--d:.05s">Trash</span></span>
+      <span class="line"><span style="--d:.18s">It all<span class="dot">.</span></span></span>
     </h1>
     <div class="hero-row">
       <div class="rv" style="--d:.5s">
@@ -324,6 +373,7 @@
   </div>
 </header>
 
+<div class="hazard" aria-hidden="true"></div>
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
     <span>Furniture</span><span class="sep">&#10022;</span><span>Appliances</span><span class="sep">&#10022;</span><span>Yard waste</span><span class="sep">&#10022;</span><span>Garage cleanouts</span><span class="sep">&#10022;</span><span>Renovation debris</span><span class="sep">&#10022;</span><span>Moving &amp; estate</span><span class="sep">&#10022;</span>
@@ -338,7 +388,7 @@
     <div class="steps">
       <div class="step rv" style="--d:.1s"><div class="num">01</div><h3>Call or send a request</h3><p>Tell us what needs to go and where you are.</p></div>
       <div class="step rv" style="--d:.22s"><div class="num">02</div><h3>Get your quote</h3><p>You get a price before we start.</p></div>
-      <div class="step rv" style="--d:.34s"><div class="num">03</div><h3>We haul it away</h3><p>We load up and take it off your hands.</p></div>
+      <div class="step rv" style="--d:.34s"><div class="stamp" aria-hidden="true">Trashed</div><div class="num">03</div><h3>We haul it away</h3><p>We load up and take it off your hands.</p></div>
     </div>
   </div>
 </section>
@@ -398,11 +448,13 @@
   </div>
 </section>
 
+<div class="hazard" aria-hidden="true"></div>
 <footer>
   <div class="wrap">
     <strong style="color:var(--cream)">Trash It All Hauling &amp; Junk Removal LLC</strong><br>
     Fort Collins, CO &middot; <a href="tel:+19706980024">(970) 698-0024</a><br>
     <span class="todo" style="margin-left:0">Confirm license / insurance details before adding any claims</span>
+    <div class="mega" aria-hidden="true">Trash it all.</div>
   </div>
 </footer>
 
@@ -451,6 +503,45 @@
   var nav = document.getElementById('nav');
   function onScroll() { nav.classList.toggle('solid', window.scrollY > window.innerHeight * 0.6); }
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // toss the junk into the truck
+  (function () {
+    var items = Array.prototype.slice.call(document.querySelectorAll('.toss'));
+    var msg = document.getElementById('tossMsg'), resetBtn = document.getElementById('tossReset'), squash = document.querySelector('.squash');
+    if (!items.length || !msg) return;
+    var START = msg.textContent, TARGET = { x: 240, y: 262 }, done = 0;
+    var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function toss(el) {
+      if (el.dataset.done) return;
+      el.dataset.done = '1';
+      var dx = TARGET.x - (+el.dataset.x), dy = TARGET.y - (+el.dataset.y), anim = null;
+      if (el.animate && !noMotion) {
+        anim = el.animate([
+          { transform: 'translate(0px,0px) rotate(0deg) scale(1)' },
+          { transform: 'translate(' + dx * 0.5 + 'px,' + (dy * 0.5 - 90) + 'px) rotate(200deg) scale(1.05)', offset: 0.5 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(340deg) scale(0.55)' }
+        ], { duration: 850, easing: 'cubic-bezier(0.35, 0.1, 0.6, 1)', fill: 'forwards' });
+      }
+      // the timeout is a fallback so the counter still advances if the browser throttles animations
+      Promise.race([anim ? anim.finished.catch(function () {}) : Promise.resolve(), sleep(noMotion ? 0 : 1300)]).then(function () {
+        el.style.visibility = 'hidden';
+        done++;
+        if (squash && !noMotion) { squash.classList.remove('hit'); void squash.getBoundingClientRect(); squash.classList.add('hit'); }
+        msg.textContent = done < items.length ? 'Tossed ' + done + ' of ' + items.length : "That's how it's done. Call us for the rest.";
+        if (done === items.length) resetBtn.hidden = false;
+      });
+    }
+    items.forEach(function (el) {
+      el.addEventListener('click', function () { toss(el); });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toss(el); } });
+    });
+    resetBtn.addEventListener('click', function () {
+      items.forEach(function (el) { el.getAnimations().forEach(function (a) { a.cancel(); }); el.style.visibility = ''; delete el.dataset.done; });
+      done = 0; msg.textContent = START; resetBtn.hidden = true;
+    });
+  })();
 
   // demo form
   document.getElementById('quote-form').addEventListener('submit', function (e) {
